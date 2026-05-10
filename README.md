@@ -16,7 +16,7 @@
 
 ```
 新生管理系统/
-├── app.py                  # Flask 主程序（后端 + API）
+├── main.py                  # Flask 主程序（后端 + API）
 ├── sort_algorithm.c        # C 语言排序算法源码
 ├── sort_algorithm.so       # 编译生成的动态链接库（Linux）
 ├── student_client.py       # Tkinter 桌面客户端
@@ -50,7 +50,6 @@
 python3 -m venv venv
 source venv/bin/activate      # Linux/Mac
 venv\Scripts\activate         # Windows
-pip install flask flask-sqlalchemy requests
 ```
 
 ### 3.3 编译 C 算法库
@@ -66,7 +65,7 @@ gcc -shared -o sort_algorithm.dll sort_algorithm.c         # Windows (MinGW)
 
 1. **启动 Flask 后端服务**  
    ```bash
-   python app.py
+   python main.py
    ```
    启动后控制台会显示：
    ```
