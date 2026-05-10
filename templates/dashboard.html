@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}仪表盘{% endblock %}
+{% block content %}
+<h2>👋 欢迎，{{ username }}</h2>
+<p style="color: var(--light-text); margin: 12px 0 24px;">
+    当前系统中共有 <strong>{{ student_count }}</strong> 名新生记录。
+</p>
+<div style="display: flex; gap: 16px;">
+    <a href="{{ url_for('student_list') }}" class="btn btn-primary">📋 管理新生信息</a>
+    <a href="{{ url_for('student_new_form') }}" class="btn btn-secondary">➕ 添加新生</a>
+</div>
+{% endblock %}

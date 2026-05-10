@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}{{ '编辑新生' if edit_mode else '添加新生' }}{% endblock %}
+{% block content %}
+<h2>{{ '✏️ 编辑新生信息' if edit_mode else '➕ 添加新生信息' }}</h2>
+<form method="POST"
+      action="{% if edit_mode %}{{ url_for('student_edit', student_id=form_data.id) }}{% else %}{{ url_for('student_add') }}{% endif %}"
+      style="max-width: 600px; margin-top: 24px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div>
+            <label>学号 *</label><br>
+            <input type="text" name="student_id" value="{{ form_data.student_id if form_data else '' }}"
+                   {{ 'readonly' if edit_mode else '' }} required
+                   style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+        </div>
+        <div>
+            <label>姓名 *</label><br>
+            <input type="text" name="name" value="{{ form_data.name if form_data else '' }}" required
+                   style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+        </div>
+        <div>
+            <label>性别 *</label><br>
+            <select name="gender" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                <option value="男" {{ 'selected' if form_data and form_data.gender=='男' }}>男</option>
+                <option value="女" {{ 'selected' if form_data and form_data.gender=='女' }}>女</option>
+            </select>
+        </div>
+        <div>
+            <label>年龄 *</label><br>
+            <input type="number" name="age" value="{{ form_data.age if form_data else '' }}" min="1" max="120" required
+                   style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+        </div>
+        <div>
+            <label>专业 *</label><br>
+            <input type="text" name="major" value="{{ form_data.major if form_data else '' }}" required
+                   style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+        </div>
+        <div>
+            <label>电话</label><br>
+            <input type="text" name="phone" value="{{ form_data.phone if form_data else '' }}"
+                   style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+        </div>
+        <div style="grid-column: span 2;">
+            <label>邮箱</label><br>
+            <input type="email" name="email" value="{{ form_data.email if form_data else '' }}"
+                   style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+        </div>
+    </div>
+    <div style="margin-top: 24px; display: flex; gap: 12px;">
+        <button type="submit" class="btn btn-primary">💾 保存</button>
+        <a href="{{ url_for('student_list') }}" class="btn btn-secondary">取消</a>
+    </div>
+</form>
+{% endblock %}

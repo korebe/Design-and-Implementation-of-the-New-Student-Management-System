@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}新生列表{% endblock %}
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h2>📚 新生信息列表</h2>
+    <a href="{{ url_for('student_new_form') }}" class="btn btn-primary">➕ 添加新生</a>
+</div>
+
+{% if students %}
+<table>
+    <thead>
+        <tr>
+            <th>学号</th>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>年龄</th>
+            <th>专业</th>
+            <th>电话</th>
+            <th>邮箱</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in students %}
+        <tr>
+            <td>{{ s.student_id }}</td>
+            <td>{{ s.name }}</td>
+            <td>{{ s.gender }}</td>
+            <td>{{ s.age }}</td>
+            <td>{{ s.major }}</td>
+            <td>{{ s.phone or '-' }}</td>
+            <td>{{ s.email or '-' }}</td>
+            <td>
+                <a href="{{ url_for('student_edit', student_id=s.id) }}" class="btn btn-secondary btn-sm">✏️ 编辑</a>
+                <form method="POST" action="{{ url_for('student_delete', student_id=s.id) }}" style="display:inline;" onsubmit="return confirm('确定删除 {{ s.name }} 吗？');">
+                    <button type="submit" class="btn btn-danger btn-sm">🗑️ 删除</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if pagination.pages > 1 %}
+<div class="pagination">
+    {% if pagination.has_prev %}
+        <a href="{{ url_for('student_list', page=pagination.prev_num) }}">« 上一页</a>
+    {% endif %}
+    {% for page_num in pagination.iter_pages() %}
+        {% if page_num %}
+            <a href="{{ url_for('student_list', page=page_num) }}" class="{{ 'current' if page_num == pagination.page }}">{{ page_num }}</a>
+        {% else %}
+            <span>…</span>
+        {% endif %}
+    {% endfor %}
+    {% if pagination.has_next %}
+        <a href="{{ url_for('student_list', page=pagination.next_num) }}">下一页 »</a>
+    {% endif %}
+</div>
+{% endif %}
+
+{% else %}
+<div style="text-align: center; padding: 40px; color: var(--light-text);">
+    暂无新生信息，请点击“添加新生”按钮添加。
+</div>
+{% endif %}
+{% endblock %}

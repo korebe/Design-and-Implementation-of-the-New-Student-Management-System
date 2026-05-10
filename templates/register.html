@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理员注册</title>
+    <style>
+        :root { --primary: #10b981; --bg: #f0f2f7; --card-bg: #ffffff; --text: #2d3348; --light-text: #6b7280; --border: #e5e7ed; --shadow: 0 8px 32px rgba(0,0,0,0.08); --radius: 16px; }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif; background:linear-gradient(135deg, #ecfdf5, #e6f9f2); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+        .card { background:var(--card-bg); border-radius:var(--radius); box-shadow:var(--shadow); padding:40px 38px 34px; width:100%; max-width:440px; }
+        .card-header { text-align:center; margin-bottom:30px; }
+        .card-header h2 { font-size:1.65rem; font-weight:700; color:var(--text); }
+        .card-header p { font-size:0.9rem; color:var(--light-text); margin-top:6px; }
+        .flash-msg { padding:12px 16px; border-radius:8px; font-size:0.88rem; margin-bottom:18px; display:flex; align-items:center; gap:8px; }
+        .flash-msg.success { background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; }
+        .flash-msg.error { background:#fef2f2; color:#991b1b; border:1px solid #fecaca; }
+        .form-group { margin-bottom:18px; }
+        .form-group label { display:block; font-size:0.85rem; font-weight:600; margin-bottom:7px; }
+        .form-group input { width:100%; padding:13px 14px; border:2px solid var(--border); border-radius:10px; font-size:0.95rem; background:#fafbfc; }
+        .btn { width:100%; padding:13px; border:none; border-radius:10px; font-size:1rem; font-weight:600; cursor:pointer; background:linear-gradient(135deg, #10b981, #1cc88a); color:#fff; margin-top:6px; box-shadow:0 4px 16px rgba(16,185,129,0.35); }
+        .card-footer { text-align:center; margin-top:20px; font-size:0.9rem; color:var(--light-text); }
+        .card-footer a { color:var(--primary); text-decoration:none; font-weight:600; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-header">
+            <h2>注册管理员</h2>
+            <p>创建您的管理员账户</p>
+        </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="flash-msg {{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <form method="POST">
+            <div class="form-group">
+                <label>用户名</label>
+                <input type="text" name="username" required minlength="3">
+            </div>
+            <div class="form-group">
+                <label>邮箱</label>
+                <input type="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label>密码</label>
+                <input type="password" name="password" required minlength="6">
+            </div>
+            <div class="form-group">
+                <label>确认密码</label>
+                <input type="password" name="confirm_password" required minlength="6">
+            </div>
+            <button type="submit" class="btn">注 册</button>
+        </form>
+        <div class="card-footer">
+            已有账户？<a href="{{ url_for('login') }}">立即登录</a>
+        </div>
+    </div>
+</body>
+</html>
