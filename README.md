@@ -9,27 +9,25 @@
 - **C 语言算法库** 封装快速排序算法，由桌面客户端通过 `ctypes` 调用，提升大数据量下的排序性能。
 
 系统适用于高校迎新场景，可高效管理新生基本信息，并支持管理员权限控制。
-~~~~
+
 ---
-
 ## 2. 项目结构
-
 ```
-新生管理系统/
-├── main.py                  # Flask 主程序（后端 + API）
-├── sort_algorithm.c        # C 语言排序算法源码
-├── sort_algorithm.so       # 编译生成的动态链接库（Linux）
-├── student_client.py       # Tkinter 桌面客户端
-├── templates/
-│   ├── base.html           # 后台管理页面公共模板
-│   ├── login.html          # 管理员登录页面
-│   ├── register.html       # 管理员注册页面
-│   ├── dashboard.html      # 仪表盘页面
-│   ├── students.html       # 新生列表页面（Web）
-│   └── student_form.html   # 新生添加/编辑表单（Web）
-└── instance/               # 自动生成的数据库文件夹
-    ├── users.db            # 管理员账户数据库
-    └── students.db         # 新生信息数据库
+    新生管理系统/
+    ├── main.py                  # Flask 主程序（后端 + API）
+    ├── sort_algorithm.c        # C 语言排序算法源码
+    ├── sort_algorithm.so       # 编译生成的动态链接库（Linux）
+    ├── student_client.py       # Tkinter 桌面客户端
+    ├── templates/
+    │   ├── base.html           # 后台管理页面公共模板
+    │   ├── login.html          # 管理员登录页面
+    │   ├── register.html       # 管理员注册页面
+    │   ├── dashboard.html      # 仪表盘页面
+    │   ├── students.html       # 新生列表页面（Web）
+    │   └── student_form.html   # 新生添加/编辑表单（Web）
+    └── instance/               # 自动生成的数据库文件夹
+        ├── users.db            # 管理员账户数据库
+        └── students.db         # 新生信息数据库
 ```
 
 ---
@@ -50,6 +48,7 @@
 python3 -m venv venv
 source venv/bin/activate      # Linux/Mac
 venv\Scripts\activate         # Windows
+pip install flask flask-sqlalchemy requests
 ```
 
 ### 3.3 编译 C 算法库
@@ -65,7 +64,7 @@ gcc -shared -o sort_algorithm.dll sort_algorithm.c         # Windows (MinGW)
 
 1. **启动 Flask 后端服务**  
    ```bash
-   python main.py
+   python app.py
    ```
    启动后控制台会显示：
    ```
@@ -160,7 +159,7 @@ gcc -shared -o sort_algorithm.dll sort_algorithm.c         # Windows (MinGW)
 | `/api/students/<id>/edit`     | POST   | 编辑新生信息             |
 | `/api/students/<id>/delete`   | POST   | 删除新生                 |
 
-**添加接口示例**：
+**添加接口示例**：  
 请求：`POST /api/students/add`  
 Body（表单格式）：
 ```
@@ -295,3 +294,4 @@ A：检查 `app.py` 是否已包含 `/api/students` 路由，并确保 `jsonify`
 - **代码结构清晰**，易于扩展和维护。
 
 可作为高校信息管理系统的原型或课程设计作品。
+```
